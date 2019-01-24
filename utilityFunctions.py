@@ -117,17 +117,9 @@ def createGenericPassword():
 
 	url = baseURL + style + '/json?' + params
 	while True:
-		try:
-			r = session.get(url)
-			password = json.loads(r.text)["pws"][0]
-			if "passphrase could not be found" not in password:
-				break
-		except json.decoder.JSONDecodeError:
-			print("JSON Error #107")
-			newSession()
-		except requests.exceptions.ConnectionError:
-			print("Connect Error #111")
-			newSession()
+		password = getWebJsonData(url, TOR=True)["pws"][0]
+		if "passphrase could not be found" not in password:
+			break
 
 	leet = [
 		['i', '1'],
