@@ -57,22 +57,38 @@ def sendData(payload, targetURL):
 			newSession()
 	return r
 
-def queryWebpageData(url, v=True):
-	headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
+def queryWebpage(url, TOR=False, TorPass=None, v=True):
+	headers = {
+		'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36',
+		'Accept-Language': 'en-US'
+	}
+
 	while True:
-		try:
-			r = requests.get(url, headers=headers, verify=v)
+			if TOR:
+				try:
+					r = session.get(url, headers=headers, verify=v)
+				except requests.exceptions.ConnectionError:
+					print("Connect Error #71")
+					newSession()
+					changeTorIP(TorPass)
+			else:
+				try:
+					r = requests.get(url, headers=headers, verify=v)
+				except requests.exceptions.ConnectionError:
+					print("Connect Error #77")
+
 			if r.ok:
-				return json.loads(r.text)
+				return r.text
 			else:
 				print("received HTTP response: " + str(r.status_code))
+
+def getWebJsonData(url, TOR=False, TorPass=None, v=True):
+	while True:
+		data = queryWebpage(url, TOR=TOR, TorPass=TorPass, v=v)
+		try:
+			return json.loads(data)
 		except json.decoder.JSONDecodeError:
 			print("JSON Error #324")
-			newSession()
-			changeTorIP()
-		except requests.exceptions.ConnectionError:
-			print("Connect Error #197")
-			newSession()
 
 def createGenericPassword():
 	baseURL = 'https://makemeapassword.ligos.net/api/v1/'
@@ -107,7 +123,6 @@ def createGenericPassword():
 		except json.decoder.JSONDecodeError:
 			print("JSON Error #107")
 			newSession()
-			changeTorIP()
 		except requests.exceptions.ConnectionError:
 			print("Connect Error #111")
 			newSession()
@@ -178,14 +193,14 @@ class fakePerson:
 
 	def loadNewPerson(self, option = 0, gender = 'random', nationality = 'US', onlyASCII = True):
 		if option == 0:
-			data = queryWebpageData('http://randomuser.me/api/')
+			data = getWebJsonData('http://randomuser.me/api/')
 			fname = data["results"][0]["name"]["first"]
 			lname = data["results"][0]["name"]["last"]
 			if onlyASCII:
 				fullname = fname + lname
 				# While name is non ASCII or contains spaces
 				while not all(ord(char) < 128 for char in fullname) or ' ' in fullname:
-					data = queryWebpageData('http://randomuser.me/api/')
+					data = getWebJsonData('http://randomuser.me/api/')
 					fname = data["results"][0]["name"]["first"]
 					lname = data["results"][0]["name"]["last"]
 					fullname = fname + lname
@@ -225,9 +240,9 @@ class fakePerson:
 				'ES': "spanish-spain"
 			}
 			url = 'https://api.namefake.com/' + nats[nationality] + '/' + gender
-			data = queryWebpageData(url, False)
+			data = getWebJsonData(url, v=False)
 			while len(data["name"].split(' ')) > 2:
-				data = queryWebpageData(url, False)
+				data = getWebJsonData(url, v=False)
 			name = data["name"].split(' ')
 			self.fname = name[0]
 			self.lname = name[1]
