@@ -15,12 +15,12 @@ try:
 		pawprint = createMizPawprint(first, last)
 		email = createMizEmail(first, last, pawprint)
 
-		# sendData({
+		# sendData(targetURL, {
 		# 	'wnd_ShortTextField_353664': pawprint,
 		# 	'wnd_ShortTextField_814166': password,
 		# 	'wnd_ShortTextField_12047': email,
 		# 	'send': 'wnd_FormBlock_207467',
-		# }, targetURL)
+		# })
 
 		print("#" + str(counter))
 		print("User: " + pawprint)

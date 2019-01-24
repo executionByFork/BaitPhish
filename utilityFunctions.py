@@ -49,21 +49,22 @@ def changeTorIP():
 		print("Using New IP: %s" % r.text)
 		lastIP = r.text
 
-def sendData(payload, targetURL):
+def sendData(targetURL, payload, headers={}):
 	while True:
 		try:
-			r = session.post(targetURL, data=payload)
+			r = session.post(targetURL, data=payload, headers=headers)
 			break
 		except requests.exceptions.ConnectionError:
 			print("Connect Error #64")
 			newSession()
 	return r
 
-def queryWebpage(url, TOR=False, v=True):
-	headers = {
-		'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36',
-		'Accept-Language': 'en-US'
-	}
+def queryWebpage(url, TOR=False, v=True, headers=None):
+	if not headers:
+		headers = {
+			'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36',
+			'Accept-Language': 'en-US'
+		}
 
 	while True:
 			if TOR:
