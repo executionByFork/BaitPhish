@@ -1,14 +1,12 @@
 
 from utilityFunctions import *
-import os
 
-TorPass = os.environ['TORPASS']
 
 try:
 	counter = 1
 	fakePerson = fakePerson()
 	while True:
-		changeTorIP(TorPass)
+		changeTorIP()
 
 		# create fake data
 
