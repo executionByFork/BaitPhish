@@ -1,15 +1,13 @@
 
 from utilityFunctions import *
-import os
 
-TorPass = os.environ['TORPASS']
 targetURL = 'https://owa-storage-accessss3.webnode.com'
 
 try:
 	counter = 1
 	fakePerson = fakePerson()
 	while True:
-		changeTorIP(TorPass)
+		changeTorIP()
 		password = createGenericPassword()
 		fakePerson.loadNewPerson()
 		first = fakePerson.getFirstName()
