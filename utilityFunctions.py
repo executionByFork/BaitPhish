@@ -2,8 +2,9 @@
 import random
 import string
 import json
-from datetime import date, datetime
 import os
+from datetime import date, datetime
+from fake_useragent import UserAgent
 
 from stem import Signal
 from stem.control import Controller
@@ -14,6 +15,7 @@ TorControlPort = 9051
 TorPass = os.environ['TORPASS']
 random.seed(datetime.now())
 
+ua = UserAgent()
 
 session = requests.session()
 session.proxies = {
@@ -92,6 +94,13 @@ def getWebJsonData(url, TOR=False, v=True):
 			return json.loads(data)
 		except json.decoder.JSONDecodeError:
 			print("JSON Error #324")
+
+def createUserAgent():
+	global ua
+	try:
+		return ua.random
+	except FakeUserAgentError:
+		return "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36"
 
 def createGenericPassword():
 	baseURL = 'https://makemeapassword.ligos.net/api/v1/'
@@ -181,6 +190,13 @@ def changeEmailDomain(email):
 
 	user = email.split('@')[0]
 	return user + '@' + random.choice(domains)
+
+def genAlphanumeric(length):
+	alphanum = ""
+	for _ in range(0,length):
+		alphanum = alphanum + random.choice(string.ascii_uppercase + string.digits)
+
+	return alphanum
 
 class fakePerson:
 	def __init__(self, option = 0):
