@@ -3,6 +3,7 @@ import random
 import string
 import json
 from datetime import date, datetime
+import os
 
 from stem import Signal
 from stem.control import Controller
@@ -10,6 +11,7 @@ import requests
 
 TorProxyPort = 9050
 TorControlPort = 9051
+TorPass = os.environ['TORPASS']
 random.seed(datetime.now())
 
 
@@ -28,7 +30,7 @@ def newSession():
 	}
 
 lastIP = ""
-def changeTorIP(TorPass = None):
+def changeTorIP():
 	with Controller.from_port(port = TorControlPort) as controller:
 		if TorPass:
 			controller.authenticate(password = TorPass)
@@ -57,7 +59,7 @@ def sendData(payload, targetURL):
 			newSession()
 	return r
 
-def queryWebpage(url, TOR=False, TorPass=None, v=True):
+def queryWebpage(url, TOR=False, v=True):
 	headers = {
 		'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36',
 		'Accept-Language': 'en-US'
@@ -70,7 +72,7 @@ def queryWebpage(url, TOR=False, TorPass=None, v=True):
 				except requests.exceptions.ConnectionError:
 					print("Connect Error #71")
 					newSession()
-					changeTorIP(TorPass)
+					changeTorIP()
 			else:
 				try:
 					r = requests.get(url, headers=headers, verify=v)
@@ -82,9 +84,9 @@ def queryWebpage(url, TOR=False, TorPass=None, v=True):
 			else:
 				print("received HTTP response: " + str(r.status_code))
 
-def getWebJsonData(url, TOR=False, TorPass=None, v=True):
+def getWebJsonData(url, TOR=False, v=True):
 	while True:
-		data = queryWebpage(url, TOR=TOR, TorPass=TorPass, v=v)
+		data = queryWebpage(url, TOR=TOR, v=v)
 		try:
 			return json.loads(data)
 		except json.decoder.JSONDecodeError:
