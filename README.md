@@ -32,4 +32,4 @@ urllib3==1.24.1
 
 1) Good luck
 
-#### Documentation on the available functions, classes, and methods in `utilityFunctions.py` can be found [here]()
+#### Documentation on the available functions, classes, and methods in `utilityFunctions.py` can be found [here](Documentation.md)
