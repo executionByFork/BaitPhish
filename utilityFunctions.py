@@ -69,6 +69,7 @@ def queryWebpage(url, TOR=False, v=True, headers=None):
 		}
 
 	while True:
+			r = None
 			if TOR:
 				try:
 					r = session.get(url, headers=headers, verify=v)
@@ -82,10 +83,11 @@ def queryWebpage(url, TOR=False, v=True, headers=None):
 				except requests.exceptions.ConnectionError:
 					print("Connect Error #77")
 
-			if r.ok:
-				return r.text
-			else:
-				print("received HTTP response: " + str(r.status_code))
+			if r:
+				if r.ok:
+					return r.text
+				else:
+					print("received HTTP response: " + str(r.status_code))
 
 def getWebJsonData(url, TOR=False, v=True):
 	while True:
