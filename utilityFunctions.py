@@ -12,7 +12,7 @@ import requests
 
 TorProxyPort = 9050
 TorControlPort = 9051
-TorPass = os.environ['TORPASS']
+TorPass = os.getenv('TORPASS', "")
 random.seed(datetime.now())
 
 ua = UserAgent()
@@ -51,14 +51,18 @@ def changeTorIP():
 		print("Using New IP: %s" % r.text)
 		lastIP = r.text
 
-def sendData(targetURL, payload, headers={}):
-	while True:
-		try:
-			r = session.post(targetURL, data=payload, headers=headers)
-			break
-		except requests.exceptions.ConnectionError:
-			print("Connect Error #64")
-			newSession()
+def sendData(targetURL, payload, headers={}, TOR=True):
+	if TOR:
+		while True:
+			try:
+				r = session.post(targetURL, data=payload, headers=headers)
+				break
+			except requests.exceptions.ConnectionError:
+				print("Connect Error #64")
+				newSession()
+	else:
+		r = requests.post(targetURL, data=payload, headers=headers) 
+	
 	return r
 
 def queryWebpage(url, TOR=False, v=True, headers=None):

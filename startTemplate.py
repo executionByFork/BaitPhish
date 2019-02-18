@@ -10,7 +10,7 @@ try:
 
 		# create fake data
 
-		# sendData({}, targetURL)
+		# sendData(targetURL, {})
 
 		print("#" + str(counter))
 		counter += 1
