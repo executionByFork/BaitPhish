@@ -33,3 +33,5 @@ urllib3==1.24.1
 1) Good luck
 
 #### Documentation on the available functions, classes, and methods in `utilityFunctions.py` can be found [here](Documentation.md)
+
+Once you have set up the tool, you may test it on a dummy webpage instance [here](https://antiphish.herokuapp.com/). The site simply returns either success or an error, depending on whether you've sent the data in the right format. Think you have the right format and are still getting an error response? Look more closely. You may be missing something ;)
