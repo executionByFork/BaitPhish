@@ -1,9 +1,10 @@
-# PhishermanFlood
-### A way to give back to the Phishers
+# BaitPhish
+### _Bait (verb): To deliberately annoy or taunt_
+#### A way to give back to the Phishers
 
-This project is a scripting library that can be used to quickly generate a bunch of fake but realistic looking data. The purpose of this project is to provide an easy to use tool for fighting back at phishing scams. Using these functions, you can generate and send out loads of fake user data, and flood the logs of the scammers who are trying to steal your information.
+This project is a scripting library that can be used to quickly generate a bunch of fake but realistic looking data. The purpose of this project is to provide an easy to use tool for fighting back at phishing scams. Using these functions, you can generate and send out loads of fake user data, and flood the logs of the scammers who are trying to steal your information with useless bait.
 
-By successfully using this tool to create a flood script, not only will you make the bulk data they collect much harder to use or sell, but more importantly you will feel satisfaction from knowing that you have just become an enourmous pain in the phisher's ass.
+By successfully using this tool to create a script, not only will you make the bulk data they collect much harder to use or sell, but more importantly you will feel satisfaction from knowing that you have just become an enourmous pain in the phisher's ass.
 
 ## Setup Instructions for \*Nix based operating systems
 
@@ -34,4 +35,5 @@ urllib3==1.24.1
 
 #### Documentation on the available functions, classes, and methods in `utilityFunctions.py` can be found [here](Documentation.md)
 
-Once you have set up the tool, you may test it on a dummy webpage instance [here](https://antiphish.herokuapp.com/). The site simply returns either success or an error, depending on whether you've sent the data in the right format. Think you have the right format and are still getting an error response? Look more closely. You may be missing something ;)
+Once you have set up the tool, you may test it on a dummy webpage instance [here](https://antiphish.herokuapp.com/). The site simply returns either success or an error, depending on whether you've sent the data in the right format.  
+_Think you have the right format and are still getting an error response? Look more closely. You may be missing something..._
