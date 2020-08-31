@@ -6,7 +6,7 @@ This project is a scripting library that can be used to quickly generate a bunch
 
 By successfully using this tool to create a script, not only will you make the bulk data they collect much harder to use or sell, but more importantly you will feel satisfaction from knowing that you have just become an enourmous pain in the phisher's ass.
 
-## Setup Instructions for \*Nix based operating systems
+## Setup Instructions for Linux based operating systems
 
 1) Setup a virtual environment for python3
   - Install [`python3`](https://docs.python-guide.org/starting/install3/linux/), and [`pip`](https://packaging.python.org/guides/installing-using-linux-tools/) if they are not already installed on your system
